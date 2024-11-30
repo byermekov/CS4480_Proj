@@ -167,3 +167,49 @@ cat error.log
 ```
 
 
+## Hadoop File System Preparation
+
+Create the necessary directories in HDFS, make sure you already started all Hadoop daemons, the namenode, datanodes by `start-all.sh` first as we learn on Labs.
+
+For example for lemmatization we can do it this way
+
+```
+hdfs dfs -mkdir /Reviews_Lemma
+
+hdfs dfs -mkdir /Reviews_Lemma/Input
+
+hdfs dfs -mkdir /Reviews_Lemma/Output
+```
+
+## Hadoop MapReduce Implementation
+
+Put the cleaned data into HDFS using the following commands:
+
+For the dataset with lemmatization:
+
+```
+hdfs dfs -put ./balanced_lemmatized.csv /Reviews_Lemma/Input
+```
+
+## Running the TF-IDF calculation process
+
+MapReduce.java contains the implementation of the TF-IDF calculation. Compile and run the code using the following commands:
+```
+javac -classpath $(hadoop classpath) -d MapReduce_classes MapReduce.java
+jar -cvf MapReduce.jar -C MapReduce_classes/ .
+hadoop jar MapReduce.jar MapReduce /Reviews/Input/balanced_lemmatized.csv /Reviews/Output
+```
+
+Repeat the hadoop jar command as necessary for the other datasets.
+
+### Retrieving Output Data
+
+After completing the MapReduce jobs, merge and retrieve the output job files with the following commands:
+
+```
+hdfs dfs -getmerge /Reviews/Output/wordcount ./wordcount.txt
+hdfs dfs -getmerge /Reviews/Output/tfidf ./tfidf.txt
+```
+
+
+
