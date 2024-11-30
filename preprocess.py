@@ -125,13 +125,17 @@ def main():
                     .write.csv(f"{args.output_dir}/balanced_all.csv", header=True, mode='overwrite')
             app_logger.info('Saved balanced dataset with all preprocessings')
         elif args.stem:
-            balanced.select('overall', 'cleaned_reviewText', 'cleaned_reviewText_stemmed') \
-                    .write.csv(f"{args.output_dir}/balanced_stemmed.csv", header=True, mode='overwrite')
-            app_logger.info('Saved balanced dataset with stemming')
+            positive.select("cleaned_reviewText_stemmed").alias("reviewText") \
+                    .write.csv(f"{args.output_dir}/positive_reviews_stemmed.csv", header=True, mode='overwrite')
+            negative.select("cleaned_reviewText_stemmed").alias("reviewText") \
+                    .write.csv(f"{args.output_dir}/negative_reviews_stemmed.csv", header=True, mode='overwrite')
+            app_logger.info('Saved positive and negative reviews with stemming')
         elif args.lemmatize:
-            balanced.select('overall', 'cleaned_reviewText', 'cleaned_reviewText_lemmatized') \
-                    .write.csv(f"{args.output_dir}/balanced_lemmatized.csv", header=True, mode='overwrite')
-            app_logger.info('Saved balanced dataset with lemmatization')
+            positive.select("cleaned_reviewText_lemmatized").alias("reviewText") \
+                    .write.csv(f"{args.output_dir}/positive_reviews_lemmatized.csv", header=True, mode='overwrite')
+            negative.select("cleaned_reviewText_stemmed").alias("reviewText") \
+                    .write.csv(f"{args.output_dir}/negative_reviews_lemmatized.csv", header=True, mode='overwrite')
+            app_logger.info('Saved positive and negative reviews with lemmatization')
         else:
             balanced.select('overall', 'cleaned_reviewText') \
                     .write.csv(f"{args.output_dir}/balanced_cleaned.csv", header=True, mode='overwrite')
