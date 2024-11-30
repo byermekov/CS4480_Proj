@@ -188,7 +188,8 @@ Put the cleaned data into HDFS using the following commands:
 For the dataset with lemmatization:
 
 ```
-hdfs dfs -put ./balanced_lemmatized.csv /Reviews_Lemma/Input
+hdfs dfs -put ./positive_reviews_lemmatized.csv /Reviews_Lemma/Input
+hdfs dfs -put ./negative_reviews_lemmatized.csv /Reviews_Lemma/Input
 ```
 
 ## Running the TF-IDF calculation process
@@ -197,7 +198,8 @@ MapReduce.java contains the implementation of the TF-IDF calculation. Compile an
 ```
 javac -classpath $(hadoop classpath) -d MapReduce_classes MapReduce.java
 jar -cvf MapReduce.jar -C MapReduce_classes/ .
-hadoop jar MapReduce.jar MapReduce /Reviews/Input/balanced_lemmatized.csv /Reviews/Output
+hadoop jar MapReduce.jar MapReduce /Reviews/Input/positive_reviews_lemmatized.csv /Reviews/Output/positive/
+hadoop jar MapReduce.jar MapReduce /Reviews/Input/negative_reviews_lemmatized.csv /Reviews/Output/negative/
 ```
 
 Repeat the hadoop jar command as necessary for the other datasets.
@@ -207,8 +209,10 @@ Repeat the hadoop jar command as necessary for the other datasets.
 After completing the MapReduce jobs, merge and retrieve the output job files with the following commands:
 
 ```
-hdfs dfs -getmerge /Reviews/Output/wordcount ./wordcount.txt
-hdfs dfs -getmerge /Reviews/Output/tfidf ./tfidf.txt
+hdfs dfs -getmerge /Reviews/Output/positive/wordcount ./wordcount_positive.txt
+hdfs dfs -getmerge /Reviews/Output/negative/wordcount ./wordcount_negative.txt
+hdfs dfs -getmerge /Reviews/Output/positive/tfidf ./tfidf_positive.txt
+hdfs dfs -getmerge /Reviews/Output/negative/tfidf ./tfidf_negative.txt
 ```
 
 
