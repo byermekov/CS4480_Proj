@@ -1,15 +1,20 @@
-# Text Preprocessing with PySpark
 
-## Overview
+# Big Data Analysis of Electronics Reviews
 
-This project provides a Python script (`preprocess.py`) for preprocessing text data from a JSON file (`Some_Input_File.json`) using **PySpark**. The preprocessing includes:
+This project analyzes Amazon electronics reviews to uncover insights into consumer sentiment using data processing and natural language processing techniques. By employing PySpark and Hadoop, the data is preprocessed, and word frequencies and TF-IDF scores are calculted.Ultimately, findings are visualized through word clouds. The objective is to identify key terms that influence customer satisfaction and dissatisfaction, aiding manufacturers and retailers in improving their products and strategies.
+
+## Text Preprocessing with PySpark
+
+### Overview
+
+Python script (`preprocess.py`) for preprocessing text data from a JSON file (`Some_Input_File.json`) using **PySpark**. The preprocessing includes:
 
 - **Text Cleaning:** Lowercasing, tokenization, removing stopwords and non-alphabetic characters.
 - **Stemming and Lemmatization:** Reducing words to their base or root form.
 - **Dataset Balancing:** Ensuring an equal number of positive and negative reviews.
 - **Output Generation:** Saving the processed data as CSV files.
 
-## Table of Contents
+### Table of Contents
 
 1. Prerequisites
 2. Installation
@@ -24,7 +29,7 @@ This project provides a Python script (`preprocess.py`) for preprocessing text d
 
 ---
 
-## Prerequisites
+### Prerequisites
 
 Before setting up and running the script, ensure that your system meets the following requirements:
 
@@ -34,16 +39,16 @@ Before setting up and running the script, ensure that your system meets the foll
 
 *Note:* PySpark is compatible with Java 8 and Java 11. Ensure that you install one of these versions to avoid compatibility issues.
 
-## Installation
+### Installation
 
 Follow the steps below to set up the environment and install all necessary dependencies.
 
-### 2.1 Install Java 11
+#### 2.1 Install Java 11
 
 PySpark requires a Java Runtime Environment (JRE) to function correctly. Ensure you have either Java 8 or Java 11 installed.
 
 
-### 2.2 Set Up Python Virtual Environment
+#### 2.2 Set Up Python Virtual Environment
 
 1. Install `venv` (if not already installed):
 
@@ -76,7 +81,7 @@ PySpark requires a Java Runtime Environment (JRE) to function correctly. Ensure 
      ```
 
 
-### 2.3 Install Required Python Packages
+#### 2.3 Install Required Python Packages
 
 1. Install Dependencies:
 
@@ -84,9 +89,9 @@ PySpark requires a Java Runtime Environment (JRE) to function correctly. Ensure 
    pip install -r requirements.txt
    ```
 
-## Usage
+### Usage
 
-### 3.1 Running the Script
+#### 3.1 Running the Script
 
 Execute the `preprocess.py` script.
 
@@ -94,7 +99,7 @@ Execute the `preprocess.py` script.
 python preprocess.py --input Your_Input_File.json --output_dir .
 ```
 
-### 3.2 Script Arguments
+#### 3.2 Script Arguments
 
 The script accepts the following command-line arguments:
 
@@ -129,7 +134,7 @@ The script accepts the following command-line arguments:
   python preprocess.py --input Apple_Products.json --output_dir ./output
   ```
 
-## Output
+### Output
 
 After successful execution, the specified `output_dir` will contain one or more of the following CSV files depending on the arguments provided:
 
@@ -150,9 +155,9 @@ Additionally, two log files are generated in the project directory:
 - `app.log`: Contains informational messages about the script's execution.
 - `error.log`: Captures any errors encountered during processing.
 
-## Logging
+### Logging
 
-### Reviewing Log Files
+#### Reviewing Log Files
 
 - **`app.log`**
 
@@ -181,7 +186,7 @@ hdfs dfs -mkdir /Reviews_Lemma/Input
 hdfs dfs -mkdir /Reviews_Lemma/Output
 ```
 
-## Hadoop MapReduce Implementation
+### Hadoop MapReduce Implementation
 
 Put the cleaned data into HDFS using the following commands:
 
@@ -192,7 +197,7 @@ hdfs dfs -put ./positive_reviews_lemmatized.csv /Reviews_Lemma/Input
 hdfs dfs -put ./negative_reviews_lemmatized.csv /Reviews_Lemma/Input
 ```
 
-## Running the TF-IDF calculation process
+### Running the TF-IDF calculation process
 
 MapReduce.java contains the implementation of the TF-IDF calculation. Compile and run the code using the following commands:
 ```
